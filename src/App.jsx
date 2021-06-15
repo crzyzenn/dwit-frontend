@@ -10,13 +10,22 @@ import { useContext } from "react";
 import { SnackbarContext } from "./contexts/Snackbar";
 import Register from "./pages/register";
 import Login from "./components/Login";
+import { AuthContext } from "./contexts/AuthContext";
 
 // 15Jun
 // Login implement
 // Refresh tokens in client side
 // Persist user on app refresh...
 
+// Exercise...
+// Main goal: Use React Context API to store user data..
+
 export default function App() {
+  // Nested object destructuring
+  const {
+    auth: { loggedIn },
+  } = useContext(AuthContext);
+
   // how to get values from context????
   const { snackbar, closeSnackbar } = useContext(SnackbarContext);
 
@@ -32,23 +41,27 @@ export default function App() {
           {snackbar.message}
         </Alert>
       </Snackbar>
+
       <Header />
 
-      <Login />
-      <Switch>
-        <Route path="/register">
-          <Register />
-        </Route>
-        <Route path="/category">
-          <Category />
-        </Route>
-        <Route path="/products">
-          <Products />
-        </Route>
-        <Route path="/">
-          <h1>Welcome to home page.</h1>
-        </Route>
-      </Switch>
+      {!loggedIn ? (
+        <Login />
+      ) : (
+        <Switch>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/category">
+            <Category />
+          </Route>
+          <Route path="/products">
+            <Products />
+          </Route>
+          <Route path="/">
+            <h1>Welcome to home page.</h1>
+          </Route>
+        </Switch>
+      )}
     </div>
   );
 }

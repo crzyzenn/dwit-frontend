@@ -10,44 +10,49 @@ import {
   HomeOutlined,
   HomeWorkOutlined,
   MenuOutlined,
-  PublishOutlined
+  PublishOutlined,
 } from "@material-ui/icons";
 import clsx from "clsx";
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 const useStyles = makeStyles({
   list: {
-    width: 250
-  }
+    width: 250,
+  },
 });
 
 const links = [
   {
     name: "Home",
     href: "/",
-    icon: <HomeOutlined />
+    icon: <HomeOutlined />,
   },
   {
     name: "Category",
     href: "/category",
-    icon: <CategorySharp />
+    icon: <CategorySharp />,
   },
   {
     name: "Products",
     href: "/products",
-    icon: <PublishOutlined />
-  }
+    icon: <PublishOutlined />,
+  },
+  {
+    name: "Logout",
+    href: "/logout",
+    icon: <PublishOutlined />,
+  },
 ];
 
 export default function Header() {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    left: false
+    left: false,
   });
 
-  // Part of daily life -- bug fixes...
-  //
+  const { logout } = useContext(AuthContext);
 
   const { push } = useHistory();
 
@@ -73,7 +78,14 @@ export default function Header() {
         {links.map(({ href, name, icon }, index) => (
           <ListItem button key={index}>
             <ListItemIcon>{icon}</ListItemIcon>
-            <ListItemText onClick={() => push(href)} primary={name} />
+            <ListItemText
+              onClick={() => {
+                if (name === "Logout") {
+                  logout();
+                } else push(href);
+              }}
+              primary={name}
+            />
           </ListItem>
         ))}
       </List>

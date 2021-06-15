@@ -1,8 +1,9 @@
 import { Button, TextField } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import { $axios } from "../lib/axios";
 import * as yup from "yup";
+import { AuthContext } from "../contexts/AuthContext";
 
 const validationSchema = yup.object({
   email: yup.string().email().required(),
@@ -10,23 +11,12 @@ const validationSchema = yup.object({
 });
 
 export default function Login() {
-  const handleLogin = async (formData) => {
-    try {
-      const { data } = await $axios.post("/auth/login", formData);
-      // We have data.accessToken
-      // Use it globally by setting the header as axios common header...
-      $axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${data.accessToken}`;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { login } = useContext(AuthContext);
   return (
     <div>
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={handleLogin}
+        onSubmit={login}
         validationSchema={validationSchema}
       >
         {({ touched, errors }) => (
