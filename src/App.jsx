@@ -9,10 +9,13 @@ import { Alert } from "@material-ui/lab";
 import { useContext } from "react";
 import { SnackbarContext } from "./contexts/Snackbar";
 import Register from "./pages/register";
+import Login from "./components/Login";
 
-// Use best practices...
-// Structure your code...
-// Create reusable components whenever necessary...
+// 15Jun
+// Login implement
+// Refresh tokens in client side
+// Persist user on app refresh...
+
 export default function App() {
   // how to get values from context????
   const { snackbar, closeSnackbar } = useContext(SnackbarContext);
@@ -30,6 +33,8 @@ export default function App() {
         </Alert>
       </Snackbar>
       <Header />
+
+      <Login />
       <Switch>
         <Route path="/register">
           <Register />

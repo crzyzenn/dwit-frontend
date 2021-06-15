@@ -29,14 +29,14 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import {
   AddOutlined,
   DeleteOutline,
   EditOutlined,
   RefreshOutlined,
-  Replay10Outlined
+  Replay10Outlined,
 } from "@material-ui/icons";
 import { Field, Form, Formik } from "formik";
 import { useContext, useEffect, useState } from "react";
@@ -51,14 +51,14 @@ const validationSchema = yup.object({
   categoryId: yup.string().required(),
   price: yup.number().required(),
   createdAt: yup.date(),
-  published: yup.boolean()
+  published: yup.boolean(),
 });
 
 export default function Products() {
   const { openSnackbar } = useContext(SnackbarContext);
   const [dialogs, setDialogs] = useState({
     addEdit: false,
-    delete: false
+    delete: false,
   });
 
   const [deleteId, setDeleteId] = useState(null);
@@ -67,7 +67,7 @@ export default function Products() {
   const [loadings, setLoadings] = useState({
     fetch: false,
     save: false,
-    delete: false
+    delete: false,
   });
 
   const [mode, setMode] = useState("ADD");
@@ -198,7 +198,7 @@ export default function Products() {
           display: "flex",
           gap: 10,
           alignItems: "center",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
         }}
       >
         <h1>Products</h1>
@@ -241,7 +241,7 @@ export default function Products() {
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      gap: 20
+                      gap: 20,
                     }}
                   >
                     <img src={product.image} alt="" width="100" />
@@ -312,7 +312,7 @@ export default function Products() {
                     image: "",
                     description: "",
                     categoryId: "",
-                    price: ""
+                    price: "",
                   }
                 : updateData
             }
