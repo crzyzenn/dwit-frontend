@@ -5,6 +5,9 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import LockIcon from "@material-ui/icons/Lock";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import {
   CategorySharp,
   HomeOutlined,
@@ -23,7 +26,22 @@ const useStyles = makeStyles({
   },
 });
 
-const links = [
+// Unauthorized user
+const guestLinks = [
+  {
+    name: "Register",
+    href: "/register",
+    icon: <PersonAddIcon />,
+  },
+  {
+    name: "Login",
+    href: "/login",
+    icon: <LockIcon />,
+  },
+];
+
+// Authorized user
+const authLinks = [
   {
     name: "Home",
     href: "/",
@@ -42,7 +60,7 @@ const links = [
   {
     name: "Logout",
     href: "/logout",
-    icon: <PublishOutlined />,
+    icon: <ExitToAppIcon />,
   },
 ];
 
@@ -52,7 +70,10 @@ export default function Header() {
     left: false,
   });
 
-  const { logout } = useContext(AuthContext);
+  const {
+    auth: { loggedIn },
+    logout,
+  } = useContext(AuthContext);
 
   const { push } = useHistory();
 
@@ -75,19 +96,33 @@ export default function Header() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {links.map(({ href, name, icon }, index) => (
-          <ListItem button key={index}>
-            <ListItemIcon>{icon}</ListItemIcon>
-            <ListItemText
-              onClick={() => {
-                if (name === "Logout") {
-                  logout();
-                } else push(href);
-              }}
-              primary={name}
-            />
-          </ListItem>
-        ))}
+        {loggedIn
+          ? authLinks.map(({ href, name, icon }, index) => (
+              <ListItem button key={index}>
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText
+                  onClick={() => {
+                    if (name === "Logout") {
+                      logout();
+                    } else push(href);
+                  }}
+                  primary={name}
+                />
+              </ListItem>
+            ))
+          : guestLinks.map(({ href, name, icon }, index) => (
+              <ListItem button key={index}>
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText
+                  onClick={() => {
+                    if (name === "Logout") {
+                      logout();
+                    } else push(href);
+                  }}
+                  primary={name}
+                />
+              </ListItem>
+            ))}
       </List>
 
       {/* Alternative way */}

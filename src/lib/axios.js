@@ -14,7 +14,7 @@ const refreshToken = async () => {
 export const $axios = axios.create({
   // baseURL: "https://dwit-ecommerce.herokuapp.com/api",
   baseURL: "http://localhost:5000/api", // Node Express Mongodb Backend
-  timeout: 10000,
+  timeout: 5000,
   withCredentials: true, // XSS / CSRF Attacks -> prevent
 });
 

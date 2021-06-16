@@ -1,6 +1,7 @@
 import { Button, CircularProgress, TextField } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { SnackbarContext } from "../contexts/Snackbar";
 import { $axios } from "../lib/axios";
@@ -9,7 +10,7 @@ const validationSchema = yup.object({
   name: yup.string().required(),
   email: yup.string().email().max(255).min(6).required(),
   password: yup.string().required().max(1024),
-  date: yup.date()
+  date: yup.date(),
 });
 
 export default function Register() {
@@ -36,7 +37,7 @@ export default function Register() {
         initialValues={{
           name: "",
           email: "",
-          password: ""
+          password: "",
         }}
         validationSchema={validationSchema}
         onSubmit={handleRegistration}
@@ -70,6 +71,9 @@ export default function Register() {
           </Form>
         )}
       </Formik>
+      <p>
+        Already a user? <Link to="/login">Log in</Link>
+      </p>
     </>
   );
 }

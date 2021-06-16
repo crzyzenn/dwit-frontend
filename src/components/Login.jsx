@@ -1,7 +1,7 @@
-import { Button, TextField } from "@material-ui/core";
+import { Button, CircularProgress, TextField } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import React, { useContext } from "react";
-import { $axios } from "../lib/axios";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -11,7 +11,7 @@ const validationSchema = yup.object({
 });
 
 export default function Login() {
-  const { login } = useContext(AuthContext);
+  const { login, loading } = useContext(AuthContext);
   return (
     <div>
       <Formik
@@ -34,11 +34,17 @@ export default function Login() {
               helperText={touched.password && errors.password}
               error={touched.password && !!errors.password}
               as={TextField}
+              type="password"
             />
-            <Button type="submit">Login</Button>
+            <Button type="submit">
+              {loading ? <CircularProgress size={15} /> : "Login"}
+            </Button>
           </Form>
         )}
       </Formik>
+      <p>
+        Not a user? <Link to="/register">Register</Link>
+      </p>
     </div>
   );
 }
