@@ -5,20 +5,20 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import LockIcon from "@material-ui/icons/Lock";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import {
   CategorySharp,
   HomeOutlined,
-  HomeWorkOutlined,
   MenuOutlined,
   PublishOutlined,
 } from "@material-ui/icons";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import LockIcon from "@material-ui/icons/Lock";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import clsx from "clsx";
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+import ReceiptIcon from "@material-ui/icons/Receipt";
 
 const useStyles = makeStyles({
   list: {
@@ -56,6 +56,11 @@ const authLinks = [
     name: "Products",
     href: "/products",
     icon: <PublishOutlined />,
+  },
+  {
+    name: "Orders",
+    href: "/orders",
+    icon: <ReceiptIcon />,
   },
   {
     name: "Logout",

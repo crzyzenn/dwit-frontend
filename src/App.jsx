@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import "./styles.css";
 import Category from "./pages/category";
 import Products from "./pages/products";
+import Orders from "./pages/orders";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useContext, useEffect } from "react";
@@ -106,6 +107,9 @@ export default function App() {
           </Route>
           <Route path="/products">
             <Products />
+          </Route>
+          <Route path="/orders">
+            <Orders />
           </Route>
           <Route path="/">
             <h1>Welcome {user.name}</h1>

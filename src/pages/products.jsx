@@ -118,8 +118,17 @@ export default function Products() {
   // Add a new product
   const addProduct = async (data) => {
     try {
+      // Use multipart/form-data....
+      const formData = new FormData();
+      formData.append("image", data.image);
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("categoryId", data.categoryId);
+      formData.append("price", data.price);
+      formData.append("published", data.published);
+
       setLoadings({ ...loadings, save: true });
-      await $axios.post("/products", data);
+      await $axios.post("/products", formData);
 
       // Show notification
       // showSnackbar("Category added!");
@@ -244,7 +253,11 @@ export default function Products() {
                       gap: 20,
                     }}
                   >
-                    <img src={product.image} alt="" width="100" />
+                    <img
+                      src={`http://localhost:5000/${product.image}`}
+                      alt=""
+                      width="100"
+                    />
                     {product.name}
                   </TableCell>
                   <TableCell>{product.description}</TableCell>
@@ -317,9 +330,17 @@ export default function Products() {
                 : updateData
             }
             onSubmit={mode === "ADD" ? addProduct : editProduct}
+            // onSubmit={(val) => console.log(val)}
             validationSchema={validationSchema}
           >
-            {({ errors, values, touched, handleBlur, handleChange }) => (
+            {({
+              errors,
+              values,
+              touched,
+              handleBlur,
+              handleChange,
+              setFieldValue,
+            }) => (
               <Form
                 style={{ display: "flex", flexDirection: "column", gap: 10 }}
               >
@@ -330,14 +351,7 @@ export default function Products() {
                   error={touched.name && !!errors.name}
                   helperText={touched.name && errors.name}
                 />
-                <Field
-                  name="image"
-                  label="Image Url"
-                  placeholder="Paste your image url here..."
-                  as={TextField}
-                  error={touched.image && !!errors.image}
-                  helperText={touched.image && errors.image}
-                />
+
                 <Field
                   name="description"
                   label="Description"
@@ -381,6 +395,15 @@ export default function Products() {
                   as={TextField}
                   error={touched.price && !!errors.price}
                   helperText={touched.price && errors.price}
+                />
+
+                <input
+                  type="file"
+                  name="image"
+                  onChange={(e) => {
+                    console.log(e.currentTarget.files[0]);
+                    setFieldValue("image", e.currentTarget.files[0]);
+                  }}
                 />
 
                 <FormControlLabel
