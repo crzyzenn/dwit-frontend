@@ -12,6 +12,7 @@ import Register from "./pages/register";
 import Login from "./components/Login";
 import { AuthContext } from "./contexts/AuthContext";
 import { $axios } from "./lib/axios";
+import { setNestedObjectValues } from "formik";
 
 // 15Jun
 // Login implement
@@ -20,6 +21,8 @@ import { $axios } from "./lib/axios";
 
 // Exercise...
 // Main goal: Use React Context API to store user data..
+
+// Localstorage...persist
 
 export default function App() {
   const {
@@ -53,6 +56,8 @@ export default function App() {
 
   // When user reloads the page...
   useEffect(() => {
+    // let data = localStorage.getItem("mydata");
+    // setNestedObjectValues(data)
     persistUser();
     // // If not logged In
     // if (!loggedIn) {

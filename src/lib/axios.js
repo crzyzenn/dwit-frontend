@@ -38,16 +38,18 @@ $axios.interceptors.response.use(
 
       if (status === 403) {
         const token = await refreshToken();
-        // Set default header
-        $axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+        if (token) {
+          // Set default header
+          $axios.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-        // Call back original request with the new token....
-        return $axios({
-          ...error.config,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+          // Call back original request with the new token....
+          return $axios({
+            ...error.config,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        }
       }
 
       console.log(status, error.config);
