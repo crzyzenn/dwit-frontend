@@ -212,11 +212,14 @@ export default function Products() {
       >
         <h1>Products</h1>
         <div>
+          {/* Add new product Button... */}
           <Tooltip title="Add new product">
             <IconButton onClick={() => openDialog("addEdit")}>
               <AddOutlined />
             </IconButton>
           </Tooltip>
+
+          {/* Refresh products list.. */}
           <Tooltip title="Refresh products list">
             <IconButton onClick={fetchProducts}>
               <RefreshOutlined />
@@ -225,9 +228,11 @@ export default function Products() {
         </div>
       </div>
 
+      {/* If products / categories are loading...show a progress bar... */}
       {loadings.fetch ? (
         <LinearProgress />
       ) : (
+        // <table><thead></thead><tbody></tbody></table>
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
@@ -267,6 +272,8 @@ export default function Products() {
                   <TableCell>
                     {new Date(product.createdAt).toLocaleDateString()}
                   </TableCell>
+
+                  {/* Actions Column.. */}
                   <TableCell>
                     {/* Edit Button */}
                     <IconButton
@@ -437,7 +444,7 @@ export default function Products() {
 
       {/* Delete Dialog */}
       <Dialog open={dialogs.delete} onClose={() => closeDialog("delete")}>
-        <DialogTitle>Delete Category.</DialogTitle>
+        <DialogTitle>Delete Product.</DialogTitle>
         <DialogContent>
           <DialogContentText>
             This action is irreversible. Do you want to delete the category?
