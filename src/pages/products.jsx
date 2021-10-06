@@ -158,8 +158,16 @@ export default function Products() {
   // Update an existing product
   const editProduct = async (data) => {
     try {
+      console.log(data);
       setLoadings({ ...loadings, save: true });
-      await $axios.put(`/products/${data._id}`, data);
+      const formData = new FormData();
+      formData.append("image", data.image);
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("categoryId", data.categoryId);
+      formData.append("price", data.price);
+      formData.append("published", data.published);
+      await $axios.put(`/products/${data._id}`, formData);
 
       // Show notification
       // showSnackbar("Category added!");
@@ -259,7 +267,7 @@ export default function Products() {
                     }}
                   >
                     <img
-                      src={`http://localhost:5000/${product.image}`}
+                      src={`https://dwit-ecommerce.herokuapp.com/${product.image}`}
                       alt=""
                       width="100"
                     />
